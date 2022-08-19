@@ -3,19 +3,24 @@ import fs from 'fs'
 
 const [PRIVATE_KEY, PUBLIC_KEY] = generateKeyPair()
 
+const keyOptions = {
+  // key size can encrypt file sizes up to 2 kilobytes
+  modulusLength: 16384,
+  publicKeyEncoding: {
+    type: 'pkcs1',
+    format: 'pem',
+  },
+  privateKeyEncoding: {
+    type: 'pkcs1',
+    format: 'pem',
+  },
+}
+
 function generateKeyPair() {
-  const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
-    // key size can encrypt file sizes up to 2 kilobytes
-    modulusLength: 16384,
-    publicKeyEncoding: {
-      type: 'pkcs1',
-      format: 'pem',
-    },
-    privateKeyEncoding: {
-      type: 'pkcs1',
-      format: 'pem',
-    },
-  })
+  const { privateKey, publicKey } = crypto.generateKeyPairSync(
+    'rsa',
+    keyOptions
+  )
   return [privateKey, publicKey]
 }
 
